@@ -136,6 +136,10 @@ class ATT {
     return ret;
   }
 
+  get_initial() {
+    return this.epsilon_closure(this.initial_state);
+  }
+
   get_finals(ctx) {
     let ret = new Set();
     for (let state in ctx) {
@@ -148,8 +152,7 @@ class ATT {
 
   lookup(s) {
     console.log('lookup: ' + s);
-    let ctx = {};
-    ctx[this.initial_state] = [''];
+    let ctx = this.get_initial();
     for (let c of s) {
       ctx = this.step(ctx, c);
     }
