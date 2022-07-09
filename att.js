@@ -136,6 +136,16 @@ class ATT {
     return ret;
   }
 
+  get_finals(ctx) {
+    let ret = new Set();
+    for (let state in ctx) {
+      if (this.finals.has(parseInt(state))) {
+        ctx[state].forEach(o => ret.add(o));
+      }
+    }
+    return ret;
+  }
+
   lookup(s) {
     console.log('lookup: ' + s);
     let ctx = {};
@@ -143,15 +153,7 @@ class ATT {
     for (let c of s) {
       ctx = this.step(ctx, c);
     }
-
-    let ret = new Set();
-
-    for (let state in ctx) {
-      if (this.finals.has(parseInt(state))) {
-        ctx[state].forEach(o => ret.add(o));
-      }
-    }
-    return ret;
+    return this.get_finals(ctx);
   }
 
   invert() {
